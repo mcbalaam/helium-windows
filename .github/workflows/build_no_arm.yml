@@ -488,6 +488,7 @@ jobs:
           make_sign_artifact: true
 
       - name: Sign Helium binaries
+        id: sign_binaries
         continue-on-error: true
         uses: signpath/github-action-submit-signing-request@v1.1
         with:
@@ -501,6 +502,7 @@ jobs:
           wait-for-completion-timeout-in-seconds: 90000
           output-artifact-directory: signed
       - name: Copy signed binaries
+        if: steps.sign_binaries.outcome == 'success'
         run: Copy-Item -Path "signed\*" -Destination "C:\helium-windows\build\src\out\Default\" -Recurse
 
       - name: Build Helium installer
@@ -512,6 +514,8 @@ jobs:
           from_artifact: false
 
       - name: Sign Helium installer
+        id: sign_installer
+        continue-on-error: true
         uses: signpath/github-action-submit-signing-request@v1.1
         with:
           api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
@@ -524,7 +528,7 @@ jobs:
           wait-for-completion-timeout-in-seconds: 90000
           output-artifact-directory: signed
       - name: Copy signed installer
-        continue-on-error: true
+        if: steps.sign_installer.outcome == 'success'
         run: Copy-Item -Path "signed\mini_installer.exe" -Destination "C:\helium-windows\build\src\out\Default\"
 
       - name: Generate user-facing artifacts
