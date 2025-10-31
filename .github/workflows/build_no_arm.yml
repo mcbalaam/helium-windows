@@ -494,7 +494,7 @@ jobs:
 
   publish-release:
     needs: [build-final]
-    if: ${{ !cancelled() && !failure()}}
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: Download package
