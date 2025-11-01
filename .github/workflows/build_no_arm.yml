@@ -485,7 +485,6 @@ jobs:
         uses: ./.github/actions/stage
         with:
           from_artifact: true
-          make_sign_artifact: true
           do_package: true
 
     outputs:
