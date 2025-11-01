@@ -486,6 +486,16 @@ jobs:
         with:
           from_artifact: true
           do_package: true
+        env:
+          SCCACHE_GHA_ENABLED: "true"
+          RUSTC_WRAPPER: "sccache"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: helium-x86_64
+          path: C:\helium-windows\build\*
+          retention-days: 5
 
     outputs:
       finished: ${{ steps.stage.outputs.finished }}
