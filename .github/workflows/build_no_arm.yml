@@ -499,7 +499,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: helium-x86_64
-          path: C:\helium-windows\build\*
+          path: |
+            C:\helium-windows\*.exe
+            C:\helium-windows\*.zip
+            C:\helium-windows\artifacts.zip
           retention-days: 5
 
     outputs:
